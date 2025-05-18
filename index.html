@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Wash Pro - Professional Power Washing Services</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #0088cc;
+            --secondary: #00aaff;
+            --accent: #f8f9fa;
+            --dark: #343a40;
+            --light: #f8f9fa;
+            --success: #28a745;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: var(--primary);
+            background-image: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero section */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/8uRY56k.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding-top: 60px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+        }
+        
+        .cta-button:hover {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Services section */
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary);
+            margin: 0.5rem auto 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .service-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .service-content {
+            padding: 1.5rem;
+        }
+        
+        .service-content h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        /* About section */
+        .about {
+            background-color: var(--light);
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-image {
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-text h2 {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .testimonials .section-title h2 {
+            color: white;
+        }
+        
+        .testimonials .section-title h2::after {
+            background-color: white;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+        }
+        
+        /* Contact section */
+        .contact {
+            background-color: var(--light);
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .contact-info p {
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info .info-item i {
+            margin-right: 10px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .contact-form button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-form button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .footer-column .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-column .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .mobile-nav-toggle {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 250px;
+                height: 100vh;
+                background-color: var(--dark);
+                padding: 2rem;
+                z-index: 1000;
+                transition: right 0.3s ease;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                margin-top: 3rem;
+            }
+            
+            nav ul li {
+                margin: 1rem 0;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        .admin-panel {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none; /* Hidden by default */
+        }
+        
+        .admin-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .admin-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .admin-form input,
+        .admin-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .admin-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .admin-form button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-form button:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Loader for testimonials */
+        .testimonial-loader {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .testimonial-loader i {
+            font-size: 2rem;
+            color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fadeIn {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+    </style>
+    <!-- Link to Font Awesome from CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-water"></i> D & J Powerwashing
+                </div>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="nav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="fadeIn">Professional Power Washing Services</h1>
+                <p class="fadeIn delay-1">Restoring the beauty of your property one wash at a time.</p>
+                <a href="#contact" class="cta-button fadeIn delay-2">Get a Free Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('https://live.staticflickr.com/8447/7762574606_6f1e2e86a8_b.jpg');"></div>
+                    <div class="service-content">
+                        <h3>Driveway Washing</h3>
+                        <p>We provide top-quality power washing for your driveway's and walk-way's to ensure all surfaces are restored back to its original beauty.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE0GTf50FNj4RMKJMFUjUJC8bdueoa6W77bg&s');"></div>
+                    <div class="service-content">
+                        <h3>Patio Washing</h3>
+                        <p>Complete patio (front and back) cleaning, from walls to the patio floor, our work is guaranteed to create the clean look it once had.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('/api/placeholder/400/300');"></div>
+                    <div class="service-content">
+                        <h3>More coming soon...</h3>
+                        <p>More services coming soon.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Us</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-image" style="background-image: url('/api/placeholder/600/400');"></div>
+                <div class="about-text">
+                    <h2>Your Local Power Washing Experts</h2>
+                    <p>Founded by two friends with a passion for restoration and cleaning, Power Wash Pro delivers exceptional service to our community. With years of experience, we've perfected our techniques to ensure optimal results for every property we touch.</p>
+                    <p>We use only eco-friendly cleaning solutions and state-of-the-art equipment to deliver results that exceed expectations. Our commitment to quality and customer satisfaction is unwavering.</p>
+                    <p>From residential homes to commercial properties, we approach each project with the same dedication to excellence and attention to detail.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Clients Say</h2>
+            </div>
+            
+            <!-- Loader will show while testimonials are loading -->
+            <div class="testimonial-loader" id="testimonial-loader">
+                <i class="fas fa-spinner"></i>
+                <p>Loading testimonials...</p>
+            </div>
+            
+            <!-- Testimonials will be dynamically inserted here -->
+            <div class="testimonial-grid" id="testimonial-grid">
+                <!-- Testimonials will be loaded from Firebase -->
+            </div>
+            
+            <!-- Admin Panel (Hidden by default) -->
+            <div class="admin-panel" id="admin-panel">
+                <h3>Add New Testimonial</h3>
+                <form class="admin-form" id="testimonial-form">
+                    <div class="form-group">
+                        <label for="content">Testimonial Content</label>
+                        <textarea id="content" name="content" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Author Name</label>
+                        <input type="text" id="author" name="author" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="position">Author Position/Title (optional)</label>
+                        <input type="text" id="position" name="position">
+                    </div>
+                    <button type="submit">Add Testimonial</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>Have a question or ready to schedule a service? Reach out to us and we'll get back to you promptly.</p>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Tomball, TX 77375 </span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(832)808-3509</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>info@powerwashpro.com</span>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Power Wash Pro</h3>
+                    <p>Your trusted partner for all power washing needs. Restoring beauty one property at a time.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#services">Residential Washing</a></li>
+                        <li><a href="#services">Commercial Washing</a></li>
+                        <li><a href="#services">Deck & Fence Restoration</a></li>
+                        <li><a href="#services">Roof Cleaning</a></li>
+                        <li><a href="#services">Concrete Cleaning</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Power Wash Pro. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+      <!-- Firebase SDK -->
+      <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  
+      <!-- Main JavaScript with Firebase Integration -->
+      <script>
+          // Your Firebase configuration
+          // IMPORTANT: Replace with your actual Firebase project details
+          const firebaseConfig = {
+  apiKey: "AIzaSyAeekLLqBJUMXnIwa8btsABBOYwosD-7dI",
+  authDomain: "djpw-3fc21.firebaseapp.com",
+  databaseURL: "https://djpw-3fc21-default-rtdb.firebaseio.com",
+  projectId: "djpw-3fc21",
+  storageBucket: "djpw-3fc21.firebasestorage.app",
+  messagingSenderId: "28184000169",
+  appId: "1:28184000169:web:a273b8ffcf879ede41dbb8"
+};
+  
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+          const database = firebase.database();
+          
+          // Reference to testimonials collection
+          const testimonialsRef = database.ref('testimonials');
+          
+          // Admin functionality
+          const adminLink = document.getElementById('admin-link');
+          const adminPanel = document.getElementById('admin-panel');
+          
+          // Check for admin access
+          function checkAdmin() {
+              // Check if admin password is stored in session
+              const isAdmin = sessionStorage.getItem('adminAccess');
+              if (isAdmin === 'true') {
+                  showAdminPanel();
+              }
+          }
+          
+          function showAdminPanel() {
+              adminLink.style.display = 'block';
+              adminLink.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  adminPanel.style.display = adminPanel.style.display === 'none' ? 'block' : 'none';
+              });
+          }
+          
+          // Admin login function
+          function adminLogin() {
+              const password = prompt("Enter admin password:");
+              // Replace 'your_admin_password' with your actual password
+              // In production, you should use proper authentication
+              if (password === '1') {
+                  sessionStorage.setItem('adminAccess', 'true');
+                  showAdminPanel();
+                  alert("Admin access granted!");
+              } else if (password !== null) {
+                  alert("Incorrect password");
+              }
+          }
+          
+          // Load testimonials from Firebase
+          function loadTestimonials() {
+              const loader = document.getElementById('testimonial-loader');
+              const testimonialGrid = document.getElementById('testimonial-grid');
+              
+              testimonialsRef.on('value', (snapshot) => {
+                  // Hide loader
+                  loader.style.display = 'none';
+                  
+                  // Clear existing testimonials
+                  testimonialGrid.innerHTML = '';
+                  
+                  // Check if testimonials exist
+                  if (snapshot.exists()) {
+                      const testimonials = snapshot.val();
+                      
+                      // Process each testimonial
+                      Object.keys(testimonials).forEach((key) => {
+                          const testimonial = testimonials[key];
+                          const testimonialCard = createTestimonialCard(testimonial, key);
+                          testimonialGrid.appendChild(testimonialCard);
+                      });
+                  } else {
+                      // Display a message if no testimonials
+                      testimonialGrid.innerHTML = `
+                          <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+                              <p>No testimonials yet. Be the first to leave one!</p>
+                          </div>
+                      `;
+                      
+                      // If no testimonials exist, add some default ones
+                      addDefaultTestimonials();
+                  }
+              });
+          }
+          
+          // Create testimonial card element
+          function createTestimonialCard(testimonial, key) {
+              const card = document.createElement('div');
+              card.className = 'testimonial-card';
+              card.dataset.key = key;
+              
+              // Build testimonial HTML
+              card.innerHTML = `
+                  <div class="testimonial-content">
+                      ${testimonial.content}
+                  </div>
+                  <div class="testimonial-author">
+                      - ${testimonial.author}${testimonial.position ? ', ' + testimonial.position : ''}
+                  </div>
+                  ${sessionStorage.getItem('adminAccess') === 'true' ? 
+                      `<div style="text-align: right; margin-top: 0.5rem;">
+                          <button class="delete-btn" style="background: #dc3545; padding: 0.25rem 0.5rem; border: none; border-radius: 3px; color: white; cursor: pointer;">
+                              <i class="fas fa-trash"></i>
+                          </button>
+                      </div>` : ''}
+              `;
+              
+              // Add delete functionality for admin
+              if (sessionStorage.getItem('adminAccess') === 'true') {
+                  const deleteBtn = card.querySelector('.delete-btn');
+                  deleteBtn.addEventListener('click', () => {
+                      if (confirm('Are you sure you want to delete this testimonial?')) {
+                          testimonialsRef.child(key).remove();
+                      }
+                  });
+              }
+              
+              return card;
+          }
+          
+          // Add default testimonials if none exist
+          function addDefaultTestimonials() {
+              const defaultTestimonials = [
+                  {
+                      content: "My driveway hadn't been cleaned in years, and Power Wash Pro made it look brand new again! Very professional service and reasonable pricing.",
+                      author: "Sarah Johnson"
+                  },
+                  {
+                      content: "We hired Power Wash Pro for our commercial building, and they did an outstanding job. The storefront looks amazing, and they were quick and efficient.",
+                      author: "Mike Thompson",
+                      position: "Store Owner"
+                  },
+                  {
+                      content: "These guys are the real deal! They restored my deck to its original beauty. Very knowledgeable about different surfaces and what treatments to use.",
+                      author: "Robert Garcia"
+                  }
+              ];
+              
+              // Add each default testimonial to Firebase
+              defaultTestimonials.forEach(testimonial => {
+                  testimonialsRef.push(testimonial);
+              });
+          }
+          
+          // Add new testimonial from admin form
+          document.getElementById('testimonial-form')?.addEventListener('submit', function(e) {
+              e.preventDefault();
+              
+              const content = document.getElementById('content').value;
+              const author = document.getElementById('author').value;
+              const position = document.getElementById('position').value;
+              
+              // Create new testimonial object
+              const newTestimonial = {
+                  content,
+                  author,
+                  position: position || ""
+              };
+              
+              // Push to Firebase
+              testimonialsRef.push(newTestimonial)
+                  .then(() => {
+                      alert('Testimonial added successfully!');
+                      document.getElementById('testimonial-form').reset();
+                  })
+                  .catch(error => {
+                      alert('Error adding testimonial: ' + error.message);
+                  });
+          });
+          
+          // Keyboard shortcut for admin login (Ctrl+Shift+A)
+          document.addEventListener('keydown', function(e) {
+              if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                  adminLogin();
+              }
+          });
+          
+          // Initialize testimonials and admin functions
+          document.addEventListener('DOMContentLoaded', function() {
+              loadTestimonials();
+              checkAdmin();
+          });
+          
+          // Your existing JavaScript remains
+          // Mobile navigation toggle
+          const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+          const nav = document.getElementById('nav');
+          
+          if (mobileNavToggle && nav) {
+              mobileNavToggle.addEventListener('click', () => {
+                  nav.classList.toggle('active');
+                  const icon = mobileNavToggle.querySelector('i');
+                  if (icon) {
+                      if (nav.classList.contains('active')) {
+                          icon.classList.remove('fa-bars');
+                          icon.classList.add('fa-times');
+                      } else {
+                          icon.classList.remove('fa-times');
+                          icon.classList.add('fa-bars');
+                      }
+                  }
+              });
+          }
+          
+          // Smooth scrolling for anchor links
+          document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+              anchor.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  
+                  const targetId = this.getAttribute('href');
+                  const targetElement = document.querySelector(targetId);
+                  
+                  if (targetElement) {
+                      // Close mobile menu if open
+                      if (nav && nav.classList.contains('active')) {
+                          nav.classList.remove('active');
+                          const icon = mobileNavToggle.querySelector('i');
+                          if (icon) {
+                              icon.classList.remove('fa-times');
+                              icon.classList.add('fa-bars');
+                          }
+                      }
+                      
+                      window.scrollTo({
+                          top: targetElement.offsetTop - 70,
+                          behavior: 'smooth'
+                      });
+                  }
+              });
+          });
+          
+          // Form submission handling
+          const contactForm = document.getElementById('contactForm');
+          if (contactForm) {
+              contactForm.addEventListener('submit', function(e) {
+                  e.preventDefault();
+                  
+                  // Get form data
+                  const name = document.getElementById('name').value;
+                  const email = document.getElementById('email').value;
+                  const phone = document.getElementById('phone').value;
+                  const message = document.getElementById('message').value;
+                  
+                  // Here you would typically send the data to a server
+                  // For demo purposes, we'll just log it and show an alert
+                  console.log('Form submitted:', { name, email, phone, message });
+                  
+                  // Show success message (in a real app, this would happen after successful API call)
+                  alert('Thank you for your message! We will get back to you soon.');
+                  
+                  // Reset the form
+                  contactForm.reset();
+              });
+          }
+          
+          // Reveal animations on scroll
+          function revealOnScroll() {
+              const elements = document.querySelectorAll('.service-card, .about-content, .testimonial-card');
+              
+              elements.forEach(element => {
+                  const elementTop = element.getBoundingClientRect().top;
+                  const windowHeight = window.innerHeight;
+                  
+                  if (elementTop < windowHeight - 100) {
+                      element.style.opacity = '1';
+                      element.style.transform = 'translateY(0)';
+                  }
+              });
+          }
+          
+          // Set initial state for animations
+          const animatedElements = document.querySelectorAll('.service-card, .about-content, .testimonial-card');
+          animatedElements.forEach(element => {
+              element.style.opacity = '0';
+              element.style.transform = 'translateY(20px)';
+              element.style.transition = 'all 0.6s ease';
+          });
+          
+          // Run on page load and scroll
+          window.addEventListener('load', revealOnScroll);
+          window.addEventListener('scroll', revealOnScroll);
+      </script>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile navigation toggle
+        const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+        const nav = document.getElementById('nav');
+        
+        if (mobileNavToggle && nav) {
+            mobileNavToggle.addEventListener('click', () => {
+                nav.classList.toggle('active');
+                const icon = mobileNavToggle.querySelector('i');
+                if (icon) {
+                    if (nav.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                }
+            });
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Close mobile menu if open
+                    if (nav && nav.classList.contains('active')) {
+                        nav.classList.remove('active');
+                        const icon = mobileNavToggle.querySelector('i');
+                        if (icon) {
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    }
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Form submission handling
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const message = document.getElementById('message').value;
+                
+                // Here you would typically send the data to a server
+                // For demo purposes, we'll just log it and show an alert
+                console.log('Form submitted:', { name, email, phone, message });
+                
+                // Show success message (in a real app, this would happen after successful API call)
+                alert('Thank you for your message! We will get back to you soon.');
+                
+                // Reset the form
+                contactForm.reset();
+            });
+        }
+        
+        // Reveal animations on scroll
+        function revealOnScroll() {
+            const elements = document.querySelectorAll('.service-card, .about-content, .testimonial-card');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Set initial state for animations
+        const animatedElements = document.querySelectorAll('.service-card, .about-content, .testimonial-card');
+        animatedElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'all 0.6s ease';
+        });
+        
+        // Run on page load and scroll
+        window.addEventListener('load', revealOnScroll);
+        window.addEventListener('scroll', revealOnScroll);
+    </script>
+</body>
+</html>
