@@ -252,7 +252,6 @@
         /* Testimonials */
         .testimonials {
             background-color: var(--primary);
-            color: white;
         }
         
         .testimonials .section-title h2 {
@@ -518,13 +517,15 @@
         }
         
         .admin-form input,
-        .admin-form textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
+.admin-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333; /* Add this line to set text color to dark gray */
+    background-color: white; /* Add this line to ensure background is white */
+}
         
         .admin-form textarea {
             resize: vertical;
@@ -686,6 +687,13 @@
                 <h2>What Our Clients Say</h2>
             </div>
             
+            <!-- Admin link (hidden by default) -->
+            <div style="text-align: right; margin-bottom: 1rem; display: none;" id="admin-controls">
+                <button id="admin-link" class="cta-button" style="background-color: #343a40; font-size: 0.9rem; padding: 0.5rem 1rem;">
+                    <i class="fas fa-cog"></i> Manage Testimonials
+                </button>
+            </div>
+            
             <!-- Loader will show while testimonials are loading -->
             <div class="testimonial-loader" id="testimonial-loader">
                 <i class="fas fa-spinner"></i>
@@ -715,6 +723,13 @@
                     </div>
                     <button type="submit">Add Testimonial</button>
                 </form>
+            </div>
+            
+            <!-- Admin login button (visible to everyone) -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <button id="admin-login-btn" style="background: transparent; border: none; color: rgba(255,255,255,0.3); font-size: 0.8rem; cursor: pointer;">
+                    Admin Access
+                </button>
             </div>
         </div>
     </section>
@@ -813,211 +828,230 @@
           // Your Firebase configuration
           // IMPORTANT: Replace with your actual Firebase project details
           const firebaseConfig = {
-  apiKey: "AIzaSyAeekLLqBJUMXnIwa8btsABBOYwosD-7dI",
-  authDomain: "djpw-3fc21.firebaseapp.com",
-  databaseURL: "https://djpw-3fc21-default-rtdb.firebaseio.com",
-  projectId: "djpw-3fc21",
-  storageBucket: "djpw-3fc21.firebasestorage.app",
-  messagingSenderId: "28184000169",
-  appId: "1:28184000169:web:a273b8ffcf879ede41dbb8"
+  apiKey: "AIzaSyAeekLLqBJUMXnIwa8btsABBOYwosD-7dI",
+  authDomain: "djpw-3fc21.firebaseapp.com",
+  databaseURL: "https://djpw-3fc21-default-rtdb.firebaseio.com",
+  projectId: "djpw-3fc21",
+  storageBucket: "djpw-3fc21.firebasestorage.app",
+  messagingSenderId: "28184000169",
+  appId: "1:28184000169:web:a273b8ffcf879ede41dbb8"
 };
-  
-          // Initialize Firebase
-          firebase.initializeApp(firebaseConfig);
-          const database = firebase.database();
-          
-          // Reference to testimonials collection
-          const testimonialsRef = database.ref('testimonials');
-          
-          // Admin functionality
-          const adminLink = document.getElementById('admin-link');
-          const adminPanel = document.getElementById('admin-panel');
-          
-          // Check for admin access
-          function checkAdmin() {
-              // Check if admin password is stored in session
-              const isAdmin = sessionStorage.getItem('adminAccess');
-              if (isAdmin === 'true') {
-                  showAdminPanel();
-              }
-          }
-          
-          function showAdminPanel() {
-              adminLink.style.display = 'block';
-              adminLink.addEventListener('click', function(e) {
-                  e.preventDefault();
-                  adminPanel.style.display = adminPanel.style.display === 'none' ? 'block' : 'none';
-              });
-          }
-          
-          // Admin login function
-          function adminLogin() {
-              const password = prompt("Enter admin password:");
-              // Replace 'your_admin_password' with your actual password
-              // In production, you should use proper authentication
-              if (password === '1') {
-                  sessionStorage.setItem('adminAccess', 'true');
-                  showAdminPanel();
-                  alert("Admin access granted!");
-              } else if (password !== null) {
-                  alert("Incorrect password");
-              }
-          }
-          
-          // Load testimonials from Firebase
-          function loadTestimonials() {
-              const loader = document.getElementById('testimonial-loader');
-              const testimonialGrid = document.getElementById('testimonial-grid');
-              
-              testimonialsRef.on('value', (snapshot) => {
-                  // Hide loader
-                  loader.style.display = 'none';
-                  
-                  // Clear existing testimonials
-                  testimonialGrid.innerHTML = '';
-                  
-                  // Check if testimonials exist
-                  if (snapshot.exists()) {
-                      const testimonials = snapshot.val();
-                      
-                      // Process each testimonial
-                      Object.keys(testimonials).forEach((key) => {
-                          const testimonial = testimonials[key];
-                          const testimonialCard = createTestimonialCard(testimonial, key);
-                          testimonialGrid.appendChild(testimonialCard);
-                      });
-                  } else {
-                      // Display a message if no testimonials
-                      testimonialGrid.innerHTML = `
-                          <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
-                              <p>No testimonials yet. Be the first to leave one!</p>
-                          </div>
-                      `;
-                      
-                      // If no testimonials exist, add some default ones
-                      addDefaultTestimonials();
-                  }
-              });
-          }
-          
-          // Create testimonial card element
-          function createTestimonialCard(testimonial, key) {
-              const card = document.createElement('div');
-              card.className = 'testimonial-card';
-              card.dataset.key = key;
-              
-              // Build testimonial HTML
-              card.innerHTML = `
-                  <div class="testimonial-content">
-                      ${testimonial.content}
-                  </div>
-                  <div class="testimonial-author">
-                      - ${testimonial.author}${testimonial.position ? ', ' + testimonial.position : ''}
-                  </div>
-                  ${sessionStorage.getItem('adminAccess') === 'true' ? 
-                      `<div style="text-align: right; margin-top: 0.5rem;">
-                          <button class="delete-btn" style="background: #dc3545; padding: 0.25rem 0.5rem; border: none; border-radius: 3px; color: white; cursor: pointer;">
-                              <i class="fas fa-trash"></i>
-                          </button>
-                      </div>` : ''}
-              `;
-              
-              // Add delete functionality for admin
-              if (sessionStorage.getItem('adminAccess') === 'true') {
-                  const deleteBtn = card.querySelector('.delete-btn');
-                  deleteBtn.addEventListener('click', () => {
-                      if (confirm('Are you sure you want to delete this testimonial?')) {
-                          testimonialsRef.child(key).remove();
-                      }
-                  });
-              }
-              
-              return card;
-          }
-          
-          // Add default testimonials if none exist
-          function addDefaultTestimonials() {
-              const defaultTestimonials = [
-                  {
-                      content: "My driveway hadn't been cleaned in years, and Power Wash Pro made it look brand new again! Very professional service and reasonable pricing.",
-                      author: "Sarah Johnson"
-                  },
-                  {
-                      content: "We hired Power Wash Pro for our commercial building, and they did an outstanding job. The storefront looks amazing, and they were quick and efficient.",
-                      author: "Mike Thompson",
-                      position: "Store Owner"
-                  },
-                  {
-                      content: "These guys are the real deal! They restored my deck to its original beauty. Very knowledgeable about different surfaces and what treatments to use.",
-                      author: "Robert Garcia"
-                  }
-              ];
-              
-              // Add each default testimonial to Firebase
-              defaultTestimonials.forEach(testimonial => {
-                  testimonialsRef.push(testimonial);
-              });
-          }
-          
-          // Add new testimonial from admin form
-          document.getElementById('testimonial-form')?.addEventListener('submit', function(e) {
-              e.preventDefault();
-              
-              const content = document.getElementById('content').value;
-              const author = document.getElementById('author').value;
-              const position = document.getElementById('position').value;
-              
-              // Create new testimonial object
-              const newTestimonial = {
-                  content,
-                  author,
-                  position: position || ""
-              };
-              
-              // Push to Firebase
-              testimonialsRef.push(newTestimonial)
-                  .then(() => {
-                      alert('Testimonial added successfully!');
-                      document.getElementById('testimonial-form').reset();
-                  })
-                  .catch(error => {
-                      alert('Error adding testimonial: ' + error.message);
-                  });
-          });
-          
-          // Keyboard shortcut for admin login (Ctrl+Shift+A)
-          document.addEventListener('keydown', function(e) {
-              if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-                  adminLogin();
-              }
-          });
-          
-          // Initialize testimonials and admin functions
-          document.addEventListener('DOMContentLoaded', function() {
-              loadTestimonials();
-              checkAdmin();
-          });
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const testimonialsRef = database.ref('testimonials');
+
+// Admin functionality elements
+const adminLink = document.getElementById('admin-link');
+const adminPanel = document.getElementById('admin-panel');
+const adminControls = document.getElementById('admin-controls');
+const adminLoginBtn = document.getElementById('admin-login-btn');
+
+function loadTestimonials() {
+    const loader = document.getElementById('testimonial-loader');
+    const testimonialGrid = document.getElementById('testimonial-grid');
+    
+    // Clear existing content
+    testimonialGrid.innerHTML = '';
+    loader.style.display = 'block';
+
+    // Use once() instead of on() to prevent continuous updates
+    testimonialsRef.once('value').then((snapshot) => {
+        loader.style.display = 'none';
+        
+        if (snapshot.exists()) {
+            const testimonials = snapshot.val();
+            Object.keys(testimonials).forEach((key) => {
+                const testimonial = testimonials[key];
+                const testimonialCard = createTestimonialCard(testimonial, key);
+                testimonialGrid.appendChild(testimonialCard);
+            });
+        } else {
+            testimonialGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+                    <p>No testimonials yet. Be the first to leave one!</p>
+                </div>
+            `;
+        }
+    });
+}
+
+// Check for admin access on page load
+function checkAdmin() {
+    // Check if admin password is stored in session
+    const isAdmin = sessionStorage.getItem('adminAccess');
+    if (isAdmin === 'true') {
+        showAdminPanel();
+    }
+}
+
+// Show admin controls when logged in
+function showAdminPanel() {
+    // Show the admin controls section
+    adminControls.style.display = 'block';
+    
+    // Add click event to the admin link
+    adminLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        adminPanel.style.display = adminPanel.style.display === 'none' ? 'block' : 'none';
+    });
+}
+
+// Admin login function
+function adminLogin() {
+    const password = prompt("Enter admin password:");
+    // Using the password you specified in your code
+    if (password === '1') {
+        sessionStorage.setItem('adminAccess', 'true');
+        showAdminPanel();
+        alert("Admin access granted!");
+        // Force refresh testimonials to show delete buttons
+        loadTestimonials();
+    } else if (password !== null) {
+        alert("Incorrect password");
+    }
+}
+
+// Connect admin login button
+if (adminLoginBtn) {
+    adminLoginBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        adminLogin();
+    });
+}
+
+// Load testimonials from Firebase
+function loadTestimonials() {
+    const loader = document.getElementById('testimonial-loader');
+    const testimonialGrid = document.getElementById('testimonial-grid');
+    
+    testimonialsRef.on('value', (snapshot) => {
+        // Hide loader
+        loader.style.display = 'none';
+        
+        // Clear existing testimonials
+        testimonialGrid.innerHTML = '';
+        
+        // Check if testimonials exist
+        if (snapshot.exists()) {
+            const testimonials = snapshot.val();
+            
+            // Process each testimonial
+            Object.keys(testimonials).forEach((key) => {
+                const testimonial = testimonials[key];
+                const testimonialCard = createTestimonialCard(testimonial, key);
+                testimonialGrid.appendChild(testimonialCard);
+            });
+        } else {
+            // Display a message if no testimonials
+            testimonialGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+                    <p>No testimonials yet. Be the first to leave one!</p>
+                </div>
+            `;
+            
+        
+        }
+    });
+}
+
+// Create testimonial card element
+function createTestimonialCard(testimonial, key) {
+    const card = document.createElement('div');
+    card.className = 'testimonial-card';
+    card.dataset.key = key;
+    
+    // Build testimonial HTML
+    card.innerHTML = `
+        <div class="testimonial-content">
+            ${testimonial.content}
+        </div>
+        <div class="testimonial-author">
+            - ${testimonial.author}${testimonial.position ? ', ' + testimonial.position : ''}
+        </div>
+        ${sessionStorage.getItem('adminAccess') === 'true' ? 
+            `<div style="text-align: right; margin-top: 0.5rem;">
+                <button class="delete-btn" style="background: #dc3545; padding: 0.25rem 0.5rem; border: none; border-radius: 3px; color: white; cursor: pointer;">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>` : ''}
+    `;
+    
+    // Add delete functionality for admin
+    if (sessionStorage.getItem('adminAccess') === 'true') {
+        const deleteBtn = card.querySelector('.delete-btn');
+        deleteBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to delete this testimonial?')) {
+                testimonialsRef.child(key).remove()
+                    .then(() => {
+                        alert('Testimonial deleted successfully!');
+                    })
+                    .catch(error => {
+                        alert('Error deleting testimonial: ' + error.message);
+                    });
+            }
+        });
+    }
+    
+    return card;
+}
+
+
+// Add new testimonial from admin form
+const testimonialForm = document.getElementById('testimonial-form');
+if (testimonialForm) {
+    testimonialForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const content = document.getElementById('content').value;
+        const author = document.getElementById('author').value;
+        const position = document.getElementById('position').value;
+        
+        // Create new testimonial object
+        const newTestimonial = {
+            content,
+            author,
+            position: position || ""
+        };
+        
+        // Push to Firebase
+        testimonialsRef.push(newTestimonial)
+            .then(() => {
+                alert('Testimonial added successfully!');
+                document.getElementById('testimonial-form').reset();
+            })
+            .catch(error => {
+                alert('Error adding testimonial: ' + error.message);
+            });
+    });
+}
+
+// Initialize testimonials and admin functions
+document.addEventListener('DOMContentLoaded', function() {
+    loadTestimonials();
+    checkAdmin();
+});
           
           // Your existing JavaScript remains
           // Mobile navigation toggle
-          const mobileNavToggle = document.getElementById('mobile-nav-toggle');
-          const nav = document.getElementById('nav');
-          
-          if (mobileNavToggle && nav) {
-              mobileNavToggle.addEventListener('click', () => {
-                  nav.classList.toggle('active');
-                  const icon = mobileNavToggle.querySelector('i');
-                  if (icon) {
-                      if (nav.classList.contains('active')) {
-                          icon.classList.remove('fa-bars');
-                          icon.classList.add('fa-times');
-                      } else {
-                          icon.classList.remove('fa-times');
-                          icon.classList.add('fa-bars');
-                      }
-                  }
-              });
-          }
+        // Removed duplicate declaration of 'nav' as it is already declared earlier in the script.
+        
+        if (mobileNavToggle && nav) {
+            mobileNavToggle.addEventListener('click', () => {
+                nav.classList.toggle('active');
+                const icon = mobileNavToggle.querySelector('i');
+                if (icon) {
+                    if (nav.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                }
+            });
+        }
           
           // Smooth scrolling for anchor links
           document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1047,7 +1081,6 @@
           });
           
           // Form submission handling
-          const contactForm = document.getElementById('contactForm');
           if (contactForm) {
               contactForm.addEventListener('submit', function(e) {
                   e.preventDefault();
@@ -1084,14 +1117,7 @@
                   }
               });
           }
-          
-          // Set initial state for animations
-          const animatedElements = document.querySelectorAll('.service-card, .about-content, .testimonial-card');
-          animatedElements.forEach(element => {
-              element.style.opacity = '0';
-              element.style.transform = 'translateY(20px)';
-              element.style.transition = 'all 0.6s ease';
-          });
+        
           
           // Run on page load and scroll
           window.addEventListener('load', revealOnScroll);
